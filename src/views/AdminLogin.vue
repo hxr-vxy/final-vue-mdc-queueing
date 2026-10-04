@@ -34,16 +34,9 @@ function submit() {
     <ThemeToggle class="mode" />
 
     <div class="content">
-      <!-- LEFT: school info, queue visual, description -->
       <section class="intro">
-        <div v-if="mdcLogo || castLogo" class="logos">
-          <img v-if="mdcLogo" :src="mdcLogo" alt="Mater Dei College Logo" />
-          <img v-if="castLogo" :src="castLogo" alt="CAST Logo" />
-        </div>
-        <div class="school">MATER DEI COLLEGE</div>
-        <div class="school-sub">College of Arts, Sciences, and Technology</div>
         <h1>MDC Queueing System</h1>
-
+        <p class="desc">A simple web-based system that helps students join a queue and allows administrators to manage and monitor students waiting for service.</p>
         <div class="line" aria-label="Students waiting in line">
           <template v-for="n in 4" :key="n">
             <AppIcon name="user" :size="26" />
@@ -52,12 +45,13 @@ function submit() {
           <span class="staff"><AppIcon name="call" :size="22" /></span>
         </div>
         <div class="line-labels"><span>BY HARVEY QUIBOL GWAPO</span></div>
-
-        <p class="desc">A simple web-based system that helps students join a queue and allows administrators to manage and monitor students waiting for service.</p>
       </section>
 
-      <!-- RIGHT: compact login form -->
       <form class="card login-form" novalidate @submit.prevent="submit">
+        <div v-if="mdcLogo || castLogo" class="logos">
+          <img v-if="mdcLogo" :src="mdcLogo" alt="Mater Dei College Logo" />
+          <img v-if="castLogo" :src="castLogo" alt="CAST Logo" />
+        </div>
         <h2>Admin Login</h2>
         <div v-if="loginError" class="alert danger">{{ loginError }}</div>
         <div class="field">
@@ -81,39 +75,36 @@ function submit() {
 </template>
 
 <style scoped>
-.login-page{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3.5rem 1rem 1.5rem;
-  background:#1e4fa3;--ov:linear-gradient(160deg,rgba(30,79,163,.82),rgba(15,45,107,.9))}
-.login-page.dark{--ov:linear-gradient(160deg,rgba(8,16,38,.88),rgba(4,9,24,.94))}
+.login-page{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4rem 1rem 2rem;background:#1e4fa3;
+  --ov:linear-gradient(120deg,rgba(15,45,107,.45),rgba(15,45,107,.7))}
+.login-page.dark{--ov:linear-gradient(120deg,rgba(4,9,24,.6),rgba(4,9,24,.85))}
 .bg{position:absolute;inset:0;background:center/cover no-repeat}
 .overlay-layer{position:absolute;inset:0;background:var(--ov)}
 .mode{position:absolute;top:.8rem;right:.8rem;z-index:2}
 
-/* Mobile first: sections stacked (logos -> info -> visual -> description -> form) */
-.content{position:relative;width:100%;max-width:440px;display:grid;gap:1.5rem}
-.intro{text-align:center;color:#fff}
-.logos{display:inline-flex;align-items:center;gap:1rem;background:#fff;border-radius:999px;padding:.4rem 1.1rem;margin-bottom:.6rem}
-.logos img{height:52px;width:auto;max-width:40vw;object-fit:contain}
-.school{font-weight:800;letter-spacing:.1em}
-.school-sub{font-size:.85rem;opacity:.9}
-.intro h1{font-size:1.45rem;margin:.4rem 0 .6rem;color:#ffd75e}
-.line{display:flex;justify-content:center;align-items:center;gap:.15rem}
-.arr{opacity:.7;font-size:1.3rem;line-height:1;margin:0 .1rem}
+/* One page: campus background everywhere; info on the left, form card on the right */
+.content{position:relative;width:100%;max-width:1200px;display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:center;justify-items:center}
+.login-form{order:1;width:100%;max-width:400px;padding:1.6rem 1.5rem;border-radius:16px;background:var(--surface);box-shadow:0 12px 36px rgba(0,0,0,.35)}
+.intro{order:2;width:100%;max-width:400px;text-align:center;color:#fff}
+.intro h1{font-size:clamp(1.5rem,4vw,2.3rem);line-height:1.15;margin:0 0 .8rem;color:#ffd75e}
+.desc{margin:0 0 1.1rem;font-size:.95rem;line-height:1.55;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:.75rem .95rem}
+.line{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.15rem}
+.arr{opacity:.75;font-size:1.3rem;line-height:1;margin:0 .1rem}
 .staff{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffd75e;color:#0f2d6b;margin-left:.2rem}
-.line-labels{display:flex;justify-content:space-between;max-width:300px;margin:.3rem auto 0;font-size:.62rem;letter-spacing:.1em;opacity:.85}
-.desc{margin:.9rem 0 0;font-size:.9rem;line-height:1.5;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:.7rem .9rem}
-
-.login-form{box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.line-labels{margin-top:.5rem;font-size:.65rem;letter-spacing:.1em;opacity:.9}
+.logos{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:.8rem}
+.logos img{height:64px;width:auto;max-width:42%;object-fit:contain}
+.login-form h2{text-align:center;font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-bottom:.9rem}
 .pw{position:relative}
 .pw input{padding-right:4.2rem}
 .toggle{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:none;color:var(--primary);font-weight:600;cursor:pointer}
 .back{text-align:center;font-size:.9rem;margin:.8rem 0 0}
 
-/* Desktop / laptop: two columns, left = info, right = form */
 @media(min-width:900px){
-  .content{max-width:960px;grid-template-columns:1.25fr 1fr;gap:3rem;align-items:center}
-  .intro{text-align:left}
+  .login-page{padding:4rem 3vw 2rem}
+  .content{grid-template-columns:minmax(0,1.2fr) 400px;gap:4rem;justify-items:stretch}
+  .intro{order:1;max-width:520px;text-align:left}
   .line{justify-content:flex-start}
-  .line-labels{margin-left:0;margin-right:0}
-  .logos img{height:60px}
+  .login-form{order:2;justify-self:end}
 }
 </style>

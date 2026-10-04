@@ -80,9 +80,15 @@ export function useQueue() {
     return { ok: true, record: done }
   }
 
+  // Removes only today's completed records (waiting queue and current serving untouched).
+  function clearCompletedToday() {
+    completed.value = completed.value.filter((r) => !isToday(r.completedAt))
+    return { ok: true }
+  }
+
   return {
     queue, current, completed, lastCall,
     waitingCount, nextInQueue, completedToday,
-    getQueue, getCompletedToday, addToQueue, removeFromQueue, callNext, completeCurrent
+    getQueue, getCompletedToday, addToQueue, removeFromQueue, callNext, completeCurrent, clearCompletedToday
   }
 }

@@ -30,13 +30,28 @@ watch(lastCall, (call) => {
   <SchoolHeader>
     <router-link to="/admin/login"><AppButton variant="secondary" size="sm" icon="user">Admin</AppButton></router-link>
   </SchoolHeader>
-  <main class="container narrow stack">
-    <section class="card">
-      <QueueOverview :now-serving="current" :next="nextInQueue" :total="waitingCount" />
-      <QueueVisual :waiting="waitingCount" :now-serving="current" />
-      <QueueStatus :count="waitingCount" />
-    </section>
-    <JoinQueueForm />
-    <WaitingQueue :students="queue" />
+  <main class="container client-wide">
+    <div class="client-main stack">
+      <section class="card">
+        <QueueOverview :now-serving="current" :next="nextInQueue" :total="waitingCount" />
+        <QueueVisual :waiting="waitingCount" :now-serving="current" />
+        <QueueStatus :count="waitingCount" />
+      </section>
+      <JoinQueueForm />
+    </div>
+    <aside class="client-side">
+      <WaitingQueue :students="queue" />
+    </aside>
   </main>
 </template>
+
+<style>
+/* Wider layout for the Client page only (header aligned with content) */
+.site-header .hdr{max-width:1200px}
+.container.client-wide{max-width:1200px;display:grid;grid-template-columns:1fr;gap:1rem;align-items:start}
+@media(min-width:900px){
+  .container.client-wide{grid-template-columns:minmax(0,1.25fr) minmax(300px,1fr)}
+  .client-side{position:sticky;top:5rem}
+  .client-side .card{max-height:calc(100vh - 6.5rem);overflow-y:auto}
+}
+</style>

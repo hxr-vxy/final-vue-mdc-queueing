@@ -3,7 +3,8 @@ import AppButton from './AppButton.vue'
 // Child component: receives data via props, reports user choices via emits.
 defineProps({
   show: Boolean,
-  message: { type: String, default: 'Are you sure?' }
+  message: { type: String, default: 'Are you sure?' },
+  confirmLabel: { type: String, default: 'Yes, remove' }
 })
 defineEmits(['confirm', 'cancel'])
 </script>
@@ -14,7 +15,7 @@ defineEmits(['confirm', 'cancel'])
       <p>{{ message }}</p>
       <div class="actions">
         <AppButton variant="secondary" @click="$emit('cancel')">Cancel</AppButton>
-        <AppButton variant="danger" icon="trash" @click="$emit('confirm')">Yes, remove</AppButton>
+        <AppButton variant="danger" icon="trash" @click="$emit('confirm')">{{ confirmLabel }}</AppButton>
       </div>
     </div>
   </div>
